@@ -36,6 +36,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 * User can go to the discover page to search/find streams
 * User can go to their personal feed to see their followed streamers
 * User can go to their profile page to see their username, profile image, and logout button
+* User can manage the channels they follow on their profile page
 
 
 **Optional Nice-to-have Stories**
@@ -64,6 +65,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 * Profile
    * User can view their username and profile image 
    * User can logout
+   * User can manage the channels they follow
 
 ### 3. Navigation
 
