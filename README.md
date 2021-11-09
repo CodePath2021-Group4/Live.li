@@ -90,10 +90,10 @@ Live.li is a livestream application where users can discover, search, and watch 
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="DigitalWireframe1.png" width=400>
-<img src="DigitalWireframe2.png" width=400>
-<img src="DigitalWireframe3.png" width=400>
-<img src="DigitalWireframe4.png" width=400>
+<img src="DigitalWireframe1.png" width=300>
+<img src="DigitalWireframe2.png" width=300>
+<img src="DigitalWireframe3.png" width=300>
+<img src="DigitalWireframe4.png" width=300>
 ### [BONUS] Interactive Prototype
 
 ## Schema 
