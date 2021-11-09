@@ -95,6 +95,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 <img src="DigitalWireframe4.png" width=300>
 
 ### [BONUS] Interactive Prototype
+<img src="group_walkthrough.gif" width=300>
 
 ## Schema 
 [This section will be completed in Unit 9]
