@@ -90,7 +90,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="DigitalWireframe1" width=600>
+<img src="DigitalWireframe1.png" width=600>
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
