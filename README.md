@@ -86,7 +86,7 @@ Live.li is a livestream application where users can discover, search, and watch 
     * Login Screen (after the user clicks the "logout" button)
 
 ## Wireframes
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="https://i.imgur.com/Kqux7Y7.jpg" width=300>
 
 ### [BONUS] Digital Wireframes & Mockups
 <img src="DigitalWireframe1.png" width=300>
