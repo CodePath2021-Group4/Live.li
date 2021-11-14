@@ -100,9 +100,26 @@ Live.li is a livestream application where users can discover, search, and watch 
 <img src="group_walkthrough.gif" width=300>
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### User
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | username      | File     | Username provided when User signed up (unique) |
+   | password      | String   | Password provded when User signed up |
+   | profile_image | File     | Profile picture uploaded by User (default field) |
+   | channels_followed        | Array   | Will hold a list of Channel ID's followed by User ||
+
+#### Stream
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | channel_name      | String     | Name of channel associated with a particular stream (unique) |
+   | title      | String   | Current title of stream provided by streamer |
+   | thumbnail | File     | Streamer preview |
+   | streamer_image | File   | Profile Picture uploaded by Streamer |
+   | start_time        | Array   | Time when stream began |
+   | channel_id | String | Used for follow and unfollowing feature (unique) |
+   | video_id | String | Used to display/show current stream (unique) |
+   | view_count | String | Used to display current view count of stream | 
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
