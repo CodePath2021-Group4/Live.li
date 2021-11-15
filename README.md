@@ -122,7 +122,7 @@ Live.li is a livestream application where users can discover, search, and watch 
    | view_count | String | Used to display current view count of stream | 
 ### Networking
 - Login Screen
-  - 
+- - 
 - Stream Screen
 - Detail Screen
 - Profile Screen
