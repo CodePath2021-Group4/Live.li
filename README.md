@@ -123,9 +123,19 @@ Live.li is a livestream application where users can discover, search, and watch 
 ### Networking
 - Login Screen
   - (Create/POST) Create a new user on sign up
+'''
+ParseObject gameScore = new ParseObject("GameScore");
+gameScore.put("score", 1337);
+gameScore.put("playerName", "Sean Plott");
+gameScore.put("cheatMode", false);
+gameScore.saveInBackground();
+'''
 - Stream Screen
+  - (Read/GET) 
 - Detail Screen
+  - (Update/PUT) Update users channels_followed 
 - Profile Screen
+  - (Update/PUT) Update user profile image  
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
