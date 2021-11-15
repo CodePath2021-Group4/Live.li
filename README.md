@@ -123,13 +123,25 @@ Live.li is a livestream application where users can discover, search, and watch 
 ### Networking
 - Login Screen
   - (Create/POST) Create a new user on sign up
-'''
-ParseObject gameScore = new ParseObject("GameScore");
-gameScore.put("score", 1337);
-gameScore.put("playerName", "Sean Plott");
-gameScore.put("cheatMode", false);
-gameScore.saveInBackground();
-'''
+```
+ParseUser user = new ParseUser
+user.setUsername(inputted_userame);
+user.setPassword(inputted_password);
+user.put("profile_image", file)
+user.put("channels_followed", [])
+
+user.signUpInBackground(new SignUpCallback() {
+  public void done(ParseException e) {
+    if (e == null) {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
+    } else {
+      Toast.makeText(LoginActivity.this, "Issue with Sign Up", Toast.LENGTH_SHORT).show();
+    }
+  }
+});
+```
 - Stream Screen
   - (Read/GET) 
 - Detail Screen
