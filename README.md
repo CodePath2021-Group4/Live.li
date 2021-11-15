@@ -121,7 +121,11 @@ Live.li is a livestream application where users can discover, search, and watch 
    | video_id | String | Used to display/show current stream (unique) |
    | view_count | String | Used to display current view count of stream | 
 ### Networking
-- 
+- Login Screen
+  - 
+- Stream Screen
+- Detail Screen
+- Profile Screen
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
