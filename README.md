@@ -104,7 +104,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 #### User
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | username      | File     | Username provided when User signed up (unique) |
+   | username      | String     | Username provided when User signed up (unique) |
    | password      | String   | Password provded when User signed up |
    | profile_image | File     | Profile picture uploaded by User (default field) |
    | channels_followed        | Array   | Will hold a list of Channel ID's followed by User ||
