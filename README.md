@@ -123,31 +123,97 @@ Live.li is a livestream application where users can discover, search, and watch 
 ### Networking
 - Login Screen
   - (Create/POST) Create a new user on sign up
-```
-ParseUser user = new ParseUser
-user.setUsername(inputted_userame);
-user.setPassword(inputted_password);
-user.put("profile_image", file)
-user.put("channels_followed", [])
+    ```
+    ParseUser user = new ParseUser();
+    user.setUsername(inputted_userame);
+    user.setPassword(inputted_password);
+	
+	ParseObject profile = new ParseObject();
+	// settters for Profile class
+	profile.setUser(ParseUser.getCurrentUser());
+	profile.setImage(put("profile_image", File));
+	profile.setChannelsFollowed(put("channels_followed", []));
+	profile.saveInBackground();
 
-user.signUpInBackground(new SignUpCallback() {
-  public void done(ParseException e) {
-    if (e == null) {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
-    } else {
-      Toast.makeText(LoginActivity.this, "Issue with Sign Up", Toast.LENGTH_SHORT).show();
-    }
-  }
-});
-```
+    user.signUpInBackground(new SignUpCallback() {
+      public void done(ParseException e) {
+        if (e == null) {
+            // Signup Success, send User to next screen
+        } else {
+          Toast.makeText(LoginActivity.this, "Issue with Sign Up", Toast.LENGTH_SHORT).show();
+        }
+      }
+    });
+    ```
+  - (Read/GET) Fetch user login info
+	```
+	ParseUser.logInInBackground(username, password, new LogInCallback() {
+			@Override
+			public void done(ParseUser user, ParseException e) {
+				if (e != null) {
+				// State issue with login
+				}
+				// Login user and send them to main screen
+			}
+	```
 - Stream Screen
-  - (Read/GET) 
+  - (Read/GET) Fetching channels_followed for user's personal feed
+    ```
+    ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
+    query.whereEqualTo("user", ParseUser.getCurrentUser());
+    query.getFirstInBackground(new GetCallback<ParseObject>() {
+      public void done(ParseUser currentUser, ParseException e) {
+        if (e == null) {
+            //TODO Sucessfully Obtained Array. Process Channels Followed.
+        } else {
+          Toast.makeText(LoginActivity.this, "Issue with retrieving followed channels", Toast.LENGTH_SHORT).show();
+            //TODO Handle Error getting Followed Channels.
+        }
+      }
+    currentUser.saveInBackground();
+    });
+
+    ```
 - Detail Screen
-  - (Update/PUT) Update users channels_followed 
+  - (Update/PUT) Update users channels_followed
+    ```
+    ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
+    query.getInBackground("fakeIDaosndnfoe", new GetCallback<ParseObject>() {
+      public void done(ParseUser currentUser, ParseException e) {
+        if (e != null) {
+            // TODO Update Followed Channels Array with New Follow
+        } else {
+            // TODO Handle lookup Error
+        }
+      }
+    });
+    ```
 - Profile Screen
-  - (Update/PUT) Update user profile image  
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+  - (Update/PUT) Update user profile image
+    ```
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Profile");
+    query.whereEqualTo("user", ParseUser.getCurrentUser());
+    query.findInBackground(new FindCallback<Profile>() {
+        if (e == null) {
+        // Set user profile
+          profile.put("profile_image", File);
+          profile.saveInBackground();
+        }
+        // State error of uploading image
+      }
+    });
+    ```
+  - (Read/GET) Fetch Profile Info
+    ```
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Profile");
+	query.whereEqualTo("user", ParseUser.getCurrentUser());
+	query.findInBackground(new GetCallback<ParseObject>() {
+	  public void done(ParseObject object, ParseException e) {
+		if (e == null) {
+		  // Success! Retrieve and Display Profile Info.
+		} else {
+		  // Failure! Handle Failure.
+		}
+	  }
+	});
+```
