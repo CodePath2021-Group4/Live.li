@@ -1,38 +1,63 @@
 package com.example.liveli;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.parse.ParseUser;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.example.liveli.fragments.DiscoveryFragment;
+import com.example.liveli.fragments.PersonalFeedFragment;
+import com.example.liveli.fragments.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
 
 public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "ProfileFragment";
+
+
+    public static final String TAG = "MainActivity";
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Button ibExit =  findViewById(R.id.ibExit);
-        ibExit.setOnClickListener(new View.OnClickListener() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if(ParseUser.getCurrentUser() != null) {
-                    ParseUser.logOut();
-
-                    logout();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_discovery:
+                        fragment = new DiscoveryFragment();
+                        Toast.makeText(MainActivity.this, "Discovery!", Toast.LENGTH_SHORT).show();
+//                        fragmentManager.beginTransaction().replace(R.id.flContainer, homeFragment);
+                        break;
+                    case R.id.action_personal_feed:
+                        fragment = new PersonalFeedFragment();
+                        Toast.makeText(MainActivity.this, "Personal Feed!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_profile:
+                        fragment = new ProfileFragment();
+                        Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        fragment = new DiscoveryFragment();
+                        Toast.makeText(MainActivity.this, "Default!", Toast.LENGTH_SHORT).show();
+                        break;
                 }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
+
             }
         });
-    }
-
-    private void logout() {
-        Intent i =  new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(i);
+        bottomNavigationView.setSelectedItemId(R.id.action_discovery);
     }
 }
