@@ -5,7 +5,7 @@
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 1. [Schema](#Schema)
-1. [Sprint 1](#Sprint1) 
+1. [Sprint 1](#Sprint-1) 
 
 ## Overview
 ### Description
