@@ -25,14 +25,14 @@ Live.li is a livestream application where users can discover, search, and watch 
 **Required Must-have Stories**
 
 - [X] User can login/signup
+- [X] User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
 - [X] User can view a feed of streams
+- [X] User can go to their profile page and logout
 - [ ] User can search for streams using search bar
 - [ ] User can search for streams using categories
 - [ ] User can click on a stream to watch bringing up a detailed view
 - [ ] User can follow/unfollow a streamer
-- [X] User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
 - [ ] User can go to their personal feed to see their followed streamers
-- [X] User can go to their profile page and logout
 - [ ] User can manage the channels they follow on their profile page
 
 
