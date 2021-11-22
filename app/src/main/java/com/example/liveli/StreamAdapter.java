@@ -71,7 +71,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.ViewHolder
             tvTitle.setText(stream.getTitle());
             tvName.setText(stream.getChannelName());
             if (stream.getViewCount() == ""){
-                tvViews.setText("Just ended");
+                tvViews.setText("Updating...");
             }
             else {
                 tvViews.setText(stream.getViewCount() + " views");

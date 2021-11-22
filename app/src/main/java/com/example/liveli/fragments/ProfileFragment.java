@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.liveli.LoginActivity;
-import com.example.liveli.Profile;
 import com.example.liveli.R;
 import com.example.liveli.parseobjects.UserProfile;
 import com.parse.FindCallback;
@@ -27,7 +26,6 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-import java.util.List;
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
