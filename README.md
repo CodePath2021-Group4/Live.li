@@ -216,4 +216,4 @@ Live.li is a livestream application where users can discover, search, and watch 
 - [X] User can view a feed of streams
 - [X] User can go to their profile page and logout
 
-<img src="group_walkthrough.gif" width=300>
+<img src="" width=300>
