@@ -33,7 +33,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    public static final String TAG = "HomeFragment";
+    public static final String TAG = "ProfileFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
