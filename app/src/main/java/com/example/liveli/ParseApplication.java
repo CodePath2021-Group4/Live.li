@@ -2,6 +2,7 @@ package com.example.liveli;
 
 import android.app.Application;
 
+import com.example.liveli.parseobjects.UserProfile;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -10,7 +11,7 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(UserProfile.class);
         //ParseObject.registerSubclass(UserImgs.class);
         //ParseObject.registerSubclass(Likes.class);
 

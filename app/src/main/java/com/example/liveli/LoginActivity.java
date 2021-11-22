@@ -11,10 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.liveli.parseobjects.UserProfile;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import java.io.File;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -126,19 +131,46 @@ public class LoginActivity extends AppCompatActivity {
 
                     //saveProfilePic();
 
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
+                    createProfile( user );
+                    reDirectMainActivity();
+
+                    //Intent i = new Intent(LoginActivity.this, Profile.class);
+                    //startActivity(i);
+                    //finish();
                 }
             }
         });
     }
 
     private void reDirectMainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, Profile.class);
         startActivity(i);
 
         //Finishes the loginActivity and removed it from the activity stack;
         finish();
     }
+
+    private void createProfile(ParseUser user) {
+        UserProfile profile = new UserProfile();
+
+        //handle user
+        profile.setUser(user);
+
+        //Now save to backend
+        profile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "error", e);
+                    Toast.makeText(LoginActivity.this, "Error Creating Profile", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                    //etDescription.setText("");
+                    //ivPostImage.setImageResource(0);
+                    //reDirectMainActivity();
+                }
+            }
+        });
+    }
+
 }
