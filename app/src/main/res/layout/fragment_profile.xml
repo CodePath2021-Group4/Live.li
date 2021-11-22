@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Profile">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_cropped" />
+
     <ImageButton
         android:id="@+id/ibExit"
         android:layout_width="60dp"
@@ -25,7 +32,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="65dp"
         android:layout_marginEnd="15dp"
-        android:text="Log Out" />
+        android:text="Log Out"
+        android:textColor="#FF8125" />
 
     <ImageView
         android:id="@+id/ivProfilePic"
@@ -42,8 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfilePic"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Welcome Back!" />
+        android:layout_marginTop="30dp"
+        android:text="W E L C O M E  B A C K"
+        android:textColor="#535353" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -53,5 +62,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         android:text="User"
-        android:textSize="20sp" />
+        android:textColor="#FF8125"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </RelativeLayout>

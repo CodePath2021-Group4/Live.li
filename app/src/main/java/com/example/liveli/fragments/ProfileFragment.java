@@ -27,6 +27,8 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import java.util.List;
+
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
 
@@ -78,6 +80,7 @@ public class ProfileFragment extends Fragment {
     private void logout() {
         Intent i =  new Intent(getContext(), LoginActivity.class);
         startActivity(i);
+        getActivity().finish();
     }
 
     //--user defined

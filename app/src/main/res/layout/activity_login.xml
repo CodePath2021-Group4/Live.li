@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_cropped" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.2"
+        app:srcCompat="@drawable/banner2" />
+
     <EditText
         android:id="@+id/ptUsername"
         android:layout_width="200dp"
@@ -64,6 +78,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="91dp"
         android:text="LIVE.LI"
+        android:textColor="#FF8125"
         android:textSize="48sp"
         android:textStyle="bold" />
 
@@ -75,7 +90,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="106dp"
         android:layout_marginTop="236dp"
-        android:text="USERNAME" />
+        android:text="USERNAME"
+        android:textColor="#FF8125" />
 
     <TextView
         android:id="@+id/textView4"
@@ -85,6 +101,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="106dp"
         android:layout_marginTop="315dp"
-        android:text="PASSWORD" />
+        android:text="PASSWORD"
+        android:textColor="#FF8125" />
 
 </RelativeLayout>

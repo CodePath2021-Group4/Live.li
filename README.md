@@ -24,29 +24,26 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 **Required Must-have Stories**
 
-* User can login/logout
-* User can sign up
-* User can view a feed of streams
-* User can search for streams using search bar
-* User can search for streams using categories
-* User can click on a stream to watch
-* User can see the streamers name, title, profile image, video description when clicking on a stream
-* User can follow/unfollow a streamer
-* User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
-* User can go to the discover page to search/find streams
-* User can go to their personal feed to see their followed streamers
-* User can go to their profile page to see their username, profile image, and logout button
-* User can manage the channels they follow on their profile page
+- [X] User can login/signup
+- [X] User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
+- [X] User can view a feed of streams
+- [X] User can go to their profile page and logout
+- [ ] User can search for streams using search bar
+- [ ] User can search for streams using categories
+- [ ] User can click on a stream to watch bringing up a detailed view
+- [ ] User can follow/unfollow a streamer
+- [ ] User can go to their personal feed to see their followed streamers
+- [ ] User can manage the channels they follow on their profile page
 
 
 **Optional Nice-to-have Stories**
 
-* Livechat Feature
-* Push notifications for when a followed channel goes live
-* Users can update their profile image
-* Users can customize their interface (Change from light mode to dark mode, etc.)
-* Clicking on streamers name or profile image brings the user to their youtube channel
-* YouTube Integration (Import the users subscriptions)
+- [ ] Livechat Feature
+- [ ] Push notifications for when a followed channel goes live
+- [ ] Users can update their profile image
+- [ ] Users can customize their interface (Change from light mode to dark mode, etc.)
+- [ ] Clicking on streamers name or profile image brings the user to their youtube channel
+- [ ] YouTube Integration (Import the users subscriptions)
 
 
 ### 2. Screen Archetypes
@@ -209,4 +206,4 @@ Live.li is a livestream application where users can discover, search, and watch 
 		}
 	  }
 	});
-```
+	```
