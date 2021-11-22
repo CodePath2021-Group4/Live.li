@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void reDirectMainActivity() {
-        Intent i = new Intent(this, Profile.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
         //Finishes the loginActivity and removed it from the activity stack;
