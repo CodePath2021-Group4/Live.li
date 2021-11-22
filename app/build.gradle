@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
 android {
     compileSdk 31
 
@@ -13,6 +17,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_KEY", localProperties['applicationId']
+        buildConfigField "String", "CLIENT_KEY", localProperties['clientKey']
     }
 
     buildTypes {
@@ -45,3 +52,4 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.0.1"
     implementation "androidx.lifecycle:lifecycle-livedata:2.3.1"
 }
+

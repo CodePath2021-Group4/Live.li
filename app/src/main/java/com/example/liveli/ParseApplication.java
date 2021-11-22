@@ -18,8 +18,8 @@ public class ParseApplication extends Application {
         //Parse.enableLocalDatastore(this);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("m39zIghUVC1hIMRqiaBFA7TuOM38edvXfnrQhpT6")
-                .clientKey("MiV7hpRgOEu0LNPjJL8KXYtty9Lhxwn1YHYOQcDn")
+                .applicationId( BuildConfig.API_KEY )
+                .clientKey( BuildConfig.CLIENT_KEY )
                 .server("https://parseapi.back4app.com/")
                 .build()
         );
