@@ -209,7 +209,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 	```
 ## Sprint 1
 
-**Required Stories Completed for Sprint**
+**Required Stories Completed**
 
 - [X] User can login/signup
 - [X] User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
@@ -217,3 +217,8 @@ Live.li is a livestream application where users can discover, search, and watch 
 - [X] User can go to their profile page and logout
 
 <img src="Sprint1.gif" width=300>
+
+## Sprint 2
+
+**Required Stories Completed**
+
