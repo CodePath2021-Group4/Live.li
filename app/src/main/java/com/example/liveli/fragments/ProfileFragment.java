@@ -27,11 +27,9 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-
 public class ProfileFragment extends Fragment {
-
-
     public static final String TAG = "ProfileFragment";
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -39,7 +37,13 @@ public class ProfileFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
@@ -47,6 +51,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         ImageView ivPostImage = view.findViewById(R.id.ivProfilePic);
@@ -67,6 +72,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
     }
 
     private void logout() {
@@ -81,7 +87,7 @@ public class ProfileFragment extends Fragment {
         query.findInBackground(new FindCallback<UserProfile>() {
             @Override
             public void done(List<UserProfile> objects, ParseException e) {
-                if (e != null) {
+                if ( e != null) {
                     Log.e(TAG, "Error Loading Profile Image", e);
                 } else {
                     Glide.with(getContext()).load(objects.get(0).getImage().getUrl()).into(ivPostImage);
