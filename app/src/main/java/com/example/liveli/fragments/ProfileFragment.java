@@ -112,6 +112,7 @@ public class ProfileFragment extends Fragment {
     private void logout() {
         Intent i =  new Intent(getContext(), LoginActivity.class);
         startActivity(i);
+        getActivity().finish();
     }
 
     //--user defined
