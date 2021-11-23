@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ public class DiscoveryFragment extends Fragment {
     String category;
     String query;
     EditText etInput;
-    Button btnSearch;
+    ImageButton btnSearch;
 
     public DiscoveryFragment() {
         // Required empty public constructor
