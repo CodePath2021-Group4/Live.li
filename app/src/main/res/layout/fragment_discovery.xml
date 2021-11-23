@@ -16,7 +16,40 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStreams"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/sDropdown"
+        android:layout_width="136dp"
+        android:layout_height="61dp"
+        android:spinnerMode="dropdown" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/sDropdown"
+        android:background="#00FFFFFF">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etInput"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="#00FFFFFF"
+            android:hint="Search" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:text="Search" />
+
 </RelativeLayout>
