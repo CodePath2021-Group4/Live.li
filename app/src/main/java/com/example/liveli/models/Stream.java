@@ -8,22 +8,19 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
 
-
+@Parcel
 public class Stream {
 
     public static final String TAG = "Stream";
 
     // Can be grabbed from JSON
-    JSONObject snippet;
-    JSONObject id;
-    JSONObject thumbnails;
-    JSONObject highQ;
     String channel_name;
     String title;
     String description;
@@ -36,8 +33,14 @@ public class Stream {
     String channel_image;
     String view_count;
 
+    // empty constructor needed by the Parceler library
+    public Stream(){}
 
     public Stream(JSONObject jsonObject) throws JSONException {
+        JSONObject snippet;
+        JSONObject id;
+        JSONObject thumbnails;
+        JSONObject highQ;
 
         id = jsonObject.getJSONObject("id");
         snippet = jsonObject.getJSONObject("snippet");
