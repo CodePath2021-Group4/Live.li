@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_cropped" />
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="20dp" />
+
+    <ImageView
+        android:id="@+id/ivChannelImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/player"
+        tools:srcCompat="@tools:sample/avatars"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="15dp"/>
+
+    <TextView
+        android:id="@+id/tvStreamTitle"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/player"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:textColor="#FF8125"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Stream Title" />
+
+    <TextView
+        android:id="@+id/tvChannelName"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvStreamTitle"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:textColor="#787878"
+        android:textSize="16sp"
+        tools:text="Channel Name" />
+
+    <TextView
+        android:id="@+id/tvStreamPublishedAt"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvChannelName"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:textColor="#787878"
+        android:textSize="14sp"
+        tools:text="Published At" />
+
+    <TextView
+        android:id="@+id/tvStreamDescription"
+        android:layout_width="305dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvStreamPublishedAt"
+        android:textColor="#787878"
+        android:textSize="14sp"
+        tools:text="Description"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"/>
+</RelativeLayout>

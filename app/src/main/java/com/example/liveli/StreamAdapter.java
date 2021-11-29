@@ -1,6 +1,7 @@
 package com.example.liveli;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.liveli.models.Stream;
+
+import org.parceler.Parcels;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -93,6 +97,15 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.ViewHolder
                     .load(stream.getThumbnail())
                     .into(ivThumbnail);
 
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(context, stream.getTitle(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, DetailActivity.class);
+                    i.putExtra("stream", Parcels.wrap(stream));
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
