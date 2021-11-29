@@ -219,7 +219,15 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 <img src="Sprint1.gif" width=300>
 
+---
+
 ## Sprint 2
 
 **Required Stories Completed**
+- [x] User can see detailed view when clicking on stream
+- [ ] User can filter streams by category
+- [ ] User can search for streams using a search bar
+
+- Build Progess - Detailed View with working Stream:
+- ![sprint2-jules-bp-4](https://user-images.githubusercontent.com/45794969/143806952-59473596-0d09-441a-9b6b-4af4ecbb67ad.gif)
 
