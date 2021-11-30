@@ -225,10 +225,12 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 **Required Stories Completed**
 - [x] User can see detailed view when clicking on stream
-- [ ] User can filter streams by category
+- [x] User can filter streams by category
 - [X] User can search for streams using a search bar
 
 - Build Progess - Detailed View with working Stream: <br />
 ![sprint2-jules-bp-4](https://user-images.githubusercontent.com/45794969/143806952-59473596-0d09-441a-9b6b-4af4ecbb67ad.gif)
 - Build Progess - User can search for streams using a search bar: <br />
 &nbsp;<img src="Sprint2_Search.gif" width=300>
+- Build Progess - User can filter streams by category: <br />
+  <img src="sprint2_dropdown.gif" width=300>
