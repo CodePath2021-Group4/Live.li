@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".fragments.PersonalFeedFragment">
 
+    <ImageView
+        android:id="@+id/ivBackgroundDiscover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_cropped" />
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Feed!" />
+        android:text="Feed!"
+        android:textColor="@color/accent"/>
 
 </FrameLayout>
