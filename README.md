@@ -234,3 +234,5 @@ Live.li is a livestream application where users can discover, search, and watch 
 &nbsp;<img src="Sprint2_Search.gif" width=300>
 - Build Progess - User can filter streams by category: <br />
   <img src="sprint2_dropdown.gif" width=300>
+- Sprint 2 Final: <br />
+<img src="Sprint2_Final.gif" width=300>
