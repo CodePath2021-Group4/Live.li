@@ -129,103 +129,138 @@ public class PersonalFeedFragment extends Fragment {
                     AsyncHttpClient client = new AsyncHttpClient();
                     JSONArray followed = objects.get(0).getFollowed();
 
-                    //Log.i(TAG, "Profile Lookup Was Good!");
-                    //Log.i(TAG, String.valueOf(followed.length()));
-                    for (int x = 0; x < followed.length(); x++){
+                    for (int x = 0; x < followed.length(); x++) {
                         try {
-                            Log.i(TAG, followed.getString(x));
+                            String searchFollowedUrl = String.format(SEARCH_URL, followed.getString(x));
+
+                            client.get(searchFollowedUrl, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                    JSONObject jsonObject = json.jsonObject;
+
+                                    try {
+                                        JSONArray items = jsonObject.getJSONArray("items");
+
+                                        if (items.length() != 0) {
+                                            List<Stream> streamList = Stream.fromJsonArray(items);
+
+                                            for (int i = 0; i < streamList.size(); i++) {
+                                                streams.add(streamList.get(i));
+                                                views.add(streamList.get(i).getVideoId());
+                                                channels.add(streamList.get(i).getChannelId());
+                                            }
+                                            streamAdapter.notifyDataSetChanged();
+
+                                            Log.i(TAG, String.valueOf(streamList.size()));
+                                        }
+
+                                    } catch (JSONException jsonException) {
+                                        jsonException.printStackTrace();
+                                        Log.e(TAG, "Error Looking Up Searching Channel For Live Videos.");
+                                    }
+
+
+                                    StringBuilder vidIdParams = new StringBuilder();
+                                    for (int i = 0; i < views.size(); i++) {
+                                        vidIdParams.append("id=").append(views.get(i)).append("&");
+                                    }
+
+                                    String videoFollowedUrl = String.format(VIDEO_URL, vidIdParams.toString());
+                                    client.get(videoFollowedUrl, new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                            //JSONObject jsonObject = json.jsonObject;
+                                            try {
+                                                JSONArray items = json.jsonObject.getJSONArray("items");
+
+                                                for (int i = 0; i < views.size(); i++) {
+                                                    String views = items.getJSONObject(i).getJSONObject("liveStreamingDetails").getString("concurrentViewers");
+                                                    streams.get(i).setViewCount(views);
+                                                    streamAdapter.notifyDataSetChanged();
+                                                }
+                                            } catch (JSONException jsonException) {
+                                                jsonException.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                            Log.e(TAG, "Error Getting Viewer Count");
+                                        }
+                                    });
+
+                                    //GET channel data and extract channel image
+                                    StringBuilder channelIdParams = new StringBuilder();
+                                    for (int i = 0; i < channels.size(); i++) {
+                                        channelIdParams.append("id=").append(channels.get(i)).append("&");
+                                    }
+
+                                    String channelFollowedUrl = String.format(CHANNEL_URL, channelIdParams);
+                                    client.get(channelFollowedUrl, new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                            try {
+                                                JSONArray items = json.jsonObject.getJSONArray("items");
+                                                for (int i = 0; i < items.length(); i++) {
+                                                    String channelId = items.getJSONObject(i).getString("id");
+                                                    String url = items.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+                                                    hmap.put(channelId, url);
+                                                }
+                                            } catch (JSONException jsonException) {
+                                                jsonException.printStackTrace();
+                                            }
+
+                                            for (int i = 0; i < channels.size(); i++) {
+                                                streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
+                                                streamAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                            Log.e(TAG, "Error Getting Channel Image URL");
+                                        }
+                                    });
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                                }
+                            });
+
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
                         }
                     }
 
-                    String searchFollowedUrl;
-                    try {
-                        searchFollowedUrl = String.format(SEARCH_URL, followed.getString(2));
-                    } catch (JSONException jsonException) {
-                        jsonException.printStackTrace();
-                        searchFollowedUrl = String.format(SEARCH_URL, "UCBi2mrWuNuyYy4gbM6fU18Q");
+                    /*
+
+                    for (int i = 0; i < streams.size(); i++) {
+                        views.add(streams.get(i).getVideoId());
+                        channels.add(streams.get(i).getChannelId());
                     }
 
-                    client.get(searchFollowedUrl, new JsonHttpResponseHandler() {
+                    //GET video data and extract view count
+                    StringBuilder vidIdParams = new StringBuilder();
+                    for (int i = 0; i < views.size(); i++) {
+                        vidIdParams.append("id=").append(views.get(i)).append("&");
+                    }
+
+                    String videoFollowedUrl = String.format(VIDEO_URL, vidIdParams.toString().toString());
+                    client.get(videoFollowedUrl, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            JSONObject jsonObject = json.jsonObject;
-
+                            //JSONObject jsonObject = json.jsonObject;
                             try {
-                                JSONArray items = jsonObject.getJSONArray("items");
-                                streams.addAll(Stream.fromJsonArray(items));
-                                streamAdapter.notifyDataSetChanged();
+                                JSONArray items = json.jsonObject.getJSONArray("items");
 
-                                for (int i = 0; i < streams.size(); i++) {
-                                    views.add(streams.get(i).getVideoId());
-                                    channels.add(streams.get(i).getChannelId());
-                                }
-
-                                //GET video data and extract view count
-                                StringBuilder vidIdParams = new StringBuilder();
                                 for (int i = 0; i < views.size(); i++) {
-                                    vidIdParams.append("id=").append(views.get(i)).append("&");
+                                    String views = items.getJSONObject(i).getJSONObject("liveStreamingDetails").getString("concurrentViewers");
+                                    streams.get(i).setViewCount(views);
+                                    streamAdapter.notifyDataSetChanged();
                                 }
-
-                                String videoFollowedUrl = String.format(VIDEO_URL, vidIdParams.toString().toString());
-                                client.get(videoFollowedUrl, new JsonHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                        //JSONObject jsonObject = json.jsonObject;
-                                        try {
-                                            JSONArray items = json.jsonObject.getJSONArray("items");
-
-                                            for (int i = 0; i < views.size(); i++) {
-                                                String views = items.getJSONObject(i).getJSONObject("liveStreamingDetails").getString("concurrentViewers");
-                                                streams.get(i).setViewCount(views);
-                                            }
-                                        } catch (JSONException jsonException) {
-                                            jsonException.printStackTrace();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                        Log.e(TAG, "Error Getting Viewer Count");
-                                    }
-                                });
-
-                                //GET channel data and extract channel image
-                                StringBuilder channelIdParams = new StringBuilder();
-                                for (int i = 0; i < channels.size(); i++) {
-                                    channelIdParams.append("id=").append(channels.get(i)).append("&");
-                                }
-
-                                String channelFollowedUrl = String.format(CHANNEL_URL, channelIdParams);
-                                client.get(channelFollowedUrl, new JsonHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                                        try {
-                                            JSONArray items = json.jsonObject.getJSONArray("items");
-                                            for (int i = 0; i < items.length(); i++) {
-                                                String channelId = items.getJSONObject(i).getString("id");
-                                                String url = items.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
-                                                hmap.put(channelId, url);
-                                            }
-                                        } catch (JSONException jsonException) {
-                                            jsonException.printStackTrace();
-                                        }
-
-                                        for (int i = 0; i < channels.size(); i++) {
-                                            streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
-                                        }
-
-                                        streamAdapter.notifyDataSetChanged();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                        Log.e(TAG, "Error Getting Channel Image URL");
-                                    }
-                                });
-
-
                             } catch (JSONException jsonException) {
                                 jsonException.printStackTrace();
                             }
@@ -233,9 +268,44 @@ public class PersonalFeedFragment extends Fragment {
 
                         @Override
                         public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                            Log.e(TAG, "Error Getting Viewer Count");
                         }
                     });
+
+                    //GET channel data and extract channel image
+                    StringBuilder channelIdParams = new StringBuilder();
+                    for (int i = 0; i < channels.size(); i++) {
+                        channelIdParams.append("id=").append(channels.get(i)).append("&");
+                    }
+
+                    String channelFollowedUrl = String.format(CHANNEL_URL, channelIdParams);
+                    client.get(channelFollowedUrl, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            try {
+                                JSONArray items = json.jsonObject.getJSONArray("items");
+                                for (int i = 0; i < items.length(); i++) {
+                                    String channelId = items.getJSONObject(i).getString("id");
+                                    String url = items.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+                                    hmap.put(channelId, url);
+                                }
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+
+                            for (int i = 0; i < channels.size(); i++) {
+                                streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
+                                streamAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Log.e(TAG, "Error Getting Channel Image URL");
+                        }
+                    });
+
+                     */
                 }
             }
         });

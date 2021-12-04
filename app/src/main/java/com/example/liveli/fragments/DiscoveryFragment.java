@@ -243,6 +243,7 @@ public class DiscoveryFragment extends Fragment {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "onFailure");
                 Log.i(TAG, "URL" + SEARCH_URL);
+                Log.e(TAG, "err", throwable);
             }
         });
     }
