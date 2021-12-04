@@ -77,6 +77,7 @@ public class DetailActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
                 Log.e(TAG, "Failed To Initialized Player");
+                Log.e(TAG, youTubeInitializationResult.toString());
             }
         });
 
