@@ -10,6 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/bg_cropped" />
 
@@ -65,4 +67,46 @@
         android:textColor="#FF8125"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="389dp"
+        android:layout_height="345dp"
+        android:layout_below="@+id/tvUsername"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="373dp"
+            android:layout_height="201dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="#333333" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChannels"
+            android:layout_width="375dp"
+            android:layout_height="263dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="0dp"
+            android:background="#00333333"
+            android:scrollbars="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="246dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="270dp"
+            android:fontFamily="@font/luckiest_guy"
+            android:text="M A N A G E  C H A N N E L S"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+    </FrameLayout>
+
 </RelativeLayout>

@@ -1,7 +1,5 @@
 package com.example.liveli;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,15 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.liveli.parseobjects.UserProfile;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-import java.io.File;
+import org.json.JSONArray;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -155,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //handle user
         profile.setUser(user);
+        profile.setChannels(new JSONArray());
 
         //Now save to backend
         profile.saveInBackground(new SaveCallback() {
