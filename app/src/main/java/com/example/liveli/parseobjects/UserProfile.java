@@ -13,6 +13,7 @@ public class UserProfile extends ParseObject {
     public static final String KEY_IMAGE = "profile_image";
     public static final String KEY_CHANNELS = "channels_followed";
 
+
     public ParseUser getUser(){ return getParseUser(KEY_USER); }
     public void setUser(ParseUser user){ put(KEY_USER, user); }
 
@@ -23,6 +24,24 @@ public class UserProfile extends ParseObject {
         put(KEY_IMAGE, image);
     }
 
-    public JSONArray getChannels() {return getJSONArray("channels_followed");}
-    public void setChannels(JSONArray jsonArray) {put(KEY_CHANNELS, jsonArray);}
+
+public JSONArray getChannels() {return getJSONArray("channels_followed");}
+public void setChannels(JSONArray jsonArray) {put(KEY_CHANNELS, jsonArray);}
+
 }
+
+//WAS ON LINE 14
+
+//<<<<<<< HEAD
+//public static final String KEY_CHANNELS = "channels_followed";
+// OR ---------------
+//    public static final String KEY_FOLLOWED = "channels_followed";
+
+
+//WAS ON LINE 28
+
+//
+//<<<<<<< HEAD
+//public JSONArray getChannels() {return getJSONArray("channels_followed");}
+//public void setChannels(JSONArray jsonArray) {put(KEY_CHANNELS, jsonArray);}
+//        =======
