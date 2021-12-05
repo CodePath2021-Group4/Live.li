@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/ivChannel"
-            android:layout_width="177dp"
-            android:layout_height="157dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <ImageButton

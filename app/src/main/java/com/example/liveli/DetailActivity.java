@@ -4,23 +4,40 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.liveli.models.Channel;
 import com.example.liveli.models.Stream;
+import com.example.liveli.parseobjects.UserProfile;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.parse.FindCallback;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import okhttp3.Headers;
 
 public class DetailActivity extends YouTubeBaseActivity {
     public static final String TAG = "DetailActivity";
@@ -32,6 +49,10 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvStreamPublishedAt;
     TextView tvStreamDescription;
     DateFormat dateFormat;
+    Button btnFollow;
+    boolean isFollowed;
+    String currentChannel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +66,26 @@ public class DetailActivity extends YouTubeBaseActivity {
         tvStreamPublishedAt = findViewById(R.id.tvStreamPublishedAt);
         ivChannelImage = findViewById(R.id.ivChannelImage);
         tvStreamDescription = findViewById(R.id.tvStreamDescription);
+        btnFollow = findViewById(R.id.btnFollow);
 
         Stream stream = Parcels.unwrap(getIntent().getParcelableExtra("stream"));
 
         tvStreamTitle.setText(stream.getTitle());
         tvChannelName.setText(stream.getChannelName());
         tvStreamDescription.setText(stream.getDescription());
+
+        currentChannel = stream.getChannelId();
+        isFollowed = true;
+
+//        btnFollow.setOnClickListener(new View.OnClickListener() {
+//             @Override
+//             public void onClick(View v) {
+//                 Toast.makeText(getApplicationContext(), "Image cannot be empty", Toast.LENGTH_SHORT).show();
+//                 Log.i(TAG, currentChannel);
+//                 loadChannelsFollowed(ParseUser.getCurrentUser());
+//
+//             }
+//        });
 
         dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH);
         try {
@@ -112,5 +147,29 @@ public class DetailActivity extends YouTubeBaseActivity {
             return (int)Math.floor(interval) + " minute(s) ago";
         }
         return (int)Math.floor(seconds) + " second(s) ago";
+    }
+
+
+    private void loadChannelsFollowed(ParseUser currentUser) {
+        List<String> urls = new ArrayList<>();
+        ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
+        query.whereEqualTo(UserProfile.KEY_USER, currentUser);
+        query.findInBackground(new FindCallback<UserProfile>() {
+            @Override
+            public void done(List<UserProfile> objects, com.parse.ParseException e) {
+                if ( e != null) {
+                    Log.e(TAG, "Error Loading Channels Followed", e);
+                } else {
+                    Log.i(TAG, "Great success " + objects.get(0).getJSONArray("channels_followed"));
+
+//                    JSONArray channel_array = objects.get(0).getJSONArray("channels_followed");
+//
+//                    if (channel_array == null) {
+//                        Toast.makeText(getApplicationContext(),"Empty Feed, follow some channels", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+                }
+            }
+        });
     }
 }

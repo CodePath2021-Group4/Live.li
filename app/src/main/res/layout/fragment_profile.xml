@@ -53,8 +53,10 @@
         android:layout_below="@+id/ivProfilePic"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="W E L C O M E  B A C K"
-        android:textColor="#535353" />
+        android:fontFamily="@font/luckiest_guy"
+        android:text="W E L C O M E  B A C K,"
+        android:textColor="#535353"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -63,9 +65,11 @@
         android:layout_below="@+id/tvWelcomeBack"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/luckiest_guy"
         android:text="User"
+        android:textAllCaps="true"
         android:textColor="#FF8125"
-        android:textSize="20sp"
+        android:textSize="34sp"
         android:textStyle="bold" />
 
     <FrameLayout
@@ -79,18 +83,19 @@
             android:layout_width="373dp"
             android:layout_height="201dp"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="0dp"
             android:background="#333333" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChannels"
             android:layout_width="375dp"
-            android:layout_height="263dp"
+            android:layout_height="253dp"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="55dp"
             android:layout_marginBottom="0dp"
             android:background="#00333333"
+            android:layout_centerVertical="true"
             android:scrollbars="horizontal">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -100,7 +105,7 @@
             android:layout_width="246dp"
             android:layout_height="40dp"
             android:layout_marginStart="83dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="270dp"
             android:fontFamily="@font/luckiest_guy"
             android:text="M A N A G E  C H A N N E L S"
