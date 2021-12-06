@@ -12,17 +12,21 @@
 
         <ImageView
             android:id="@+id/ivChannel"
-            android:layout_width="177dp"
-            android:layout_height="157dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <ImageButton
             android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:backgroundTint="#FF0000"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="85dp"
+            android:background="@drawable/bg_rounded_button"
+            app:srcCompat="@drawable/ic_baseline_cancel_25" />
     </FrameLayout>
 
 </RelativeLayout>
+
+    <!--            android:layout_gravity="right|top"-->
