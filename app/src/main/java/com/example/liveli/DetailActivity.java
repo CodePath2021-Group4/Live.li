@@ -2,6 +2,7 @@ package com.example.liveli;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +51,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvStreamDescription;
     DateFormat dateFormat;
     Button btnFollow;
-    boolean isFollowed;
+    boolean isFollowed = false;
     String currentChannel;
 
 
@@ -66,26 +67,37 @@ public class DetailActivity extends YouTubeBaseActivity {
         tvStreamPublishedAt = findViewById(R.id.tvStreamPublishedAt);
         ivChannelImage = findViewById(R.id.ivChannelImage);
         tvStreamDescription = findViewById(R.id.tvStreamDescription);
-        btnFollow = findViewById(R.id.btnFollow);
+        btnFollow = (Button) findViewById(R.id.btnFollow);
 
         Stream stream = Parcels.unwrap(getIntent().getParcelableExtra("stream"));
 
         tvStreamTitle.setText(stream.getTitle());
         tvChannelName.setText(stream.getChannelName());
         tvStreamDescription.setText(stream.getDescription());
-
         currentChannel = stream.getChannelId();
-        isFollowed = true;
 
-//        btnFollow.setOnClickListener(new View.OnClickListener() {
-//             @Override
-//             public void onClick(View v) {
-//                 Toast.makeText(getApplicationContext(), "Image cannot be empty", Toast.LENGTH_SHORT).show();
-//                 Log.i(TAG, currentChannel);
-//                 loadChannelsFollowed(ParseUser.getCurrentUser());
+
+
+        checkIfFollowed(ParseUser.getCurrentUser(), currentChannel);
+
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Log.i(TAG, "Is followed? : " + isFollowed);
+
+                 if(checkIfFollowed(ParseUser.getCurrentUser(), currentChannel).equals("FOLLOW")) {
+                     addChannel(ParseUser.getCurrentUser(), currentChannel);
+                     btnFollow.setText("FOLLOWED");
+                     btnFollow.setBackgroundColor(Color.parseColor("#555555"));
+                     Log.i(TAG, "Button followed!!!!!!!!!!!!!!!!!!!!!");
+                 } else {
+                     Log.i(TAG, "Not followed yet : " + isFollowed);
 //
-//             }
-//        });
+                 }
+
+
+             }
+        });
 
         dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH);
         try {
@@ -150,8 +162,37 @@ public class DetailActivity extends YouTubeBaseActivity {
     }
 
 
-    private void loadChannelsFollowed(ParseUser currentUser) {
-        List<String> urls = new ArrayList<>();
+    public void addChannel(ParseUser currentUser, String currentChannel) {
+        ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
+        query.whereEqualTo(UserProfile.KEY_USER, currentUser);
+        query.findInBackground(new FindCallback<UserProfile>() {
+            @Override
+            public void done(List<UserProfile> objects, com.parse.ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error Loading Channels Followed", e);
+                } else {
+                    Log.i(TAG, "Great success " + objects.get(0).getJSONArray("channels_followed"));
+
+                    JSONArray channel_array = objects.get(0).getJSONArray("channels_followed");
+                    List<String> updatedChannels = new ArrayList<>();
+                    for (int i = 0; i < channel_array.length(); i++) {  // iterate through the JsonArray
+                        try {
+                            String channel = channel_array.getString(i);
+                            updatedChannels.add(channel);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                    updatedChannels.add(currentChannel);
+                    objects.get(0).put("channels_followed", updatedChannels);
+                    objects.get(0).saveInBackground();
+                }
+            }
+        });
+    }
+
+
+    public String checkIfFollowed(ParseUser currentUser, String currentChannel) {
         ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
         query.whereEqualTo(UserProfile.KEY_USER, currentUser);
         query.findInBackground(new FindCallback<UserProfile>() {
@@ -162,14 +203,32 @@ public class DetailActivity extends YouTubeBaseActivity {
                 } else {
                     Log.i(TAG, "Great success " + objects.get(0).getJSONArray("channels_followed"));
 
-//                    JSONArray channel_array = objects.get(0).getJSONArray("channels_followed");
-//
-//                    if (channel_array == null) {
-//                        Toast.makeText(getApplicationContext(),"Empty Feed, follow some channels", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
+                    JSONArray channel_array = objects.get(0).getJSONArray("channels_followed");
+
+                    for(int i = 0; i < channel_array.length(); i++) {  // iterate through the JsonArray
+                        try {
+                            String channel = channel_array.getString(i);
+                            Log.i(TAG, "Button's text: " + btnFollow.getText());
+                            // if enter detail screen and
+                            if (currentChannel.equals(channel) && btnFollow.getText().equals("FOLLOW")) {
+
+                                btnFollow.setText("FOLLOWED");
+                                btnFollow.setBackgroundColor(Color.parseColor("#555555"));
+                                Log.i(TAG,"MATCH! ---------------------------------------------");
+                            }
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+
+                    if (channel_array == null) {
+                        Toast.makeText(getApplicationContext(),"Empty Feed, follow some channels", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                 }
             }
         });
+        return (String) btnFollow.getText();
     }
 }
