@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_cropped" />
+
+    <ImageButton
+        android:id="@+id/ibExit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_outline_login_48" />
+
+    <TextView
+        android:id="@+id/tvLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="15dp"
+        android:text="Log Out"
+        android:textColor="#FF8125" />
+
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvWelcomeBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/luckiest_guy"
+        android:text="W E L C O M E  B A C K,"
+        android:textColor="#535353"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWelcomeBack"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/luckiest_guy"
+        android:text="User"
+        android:textAllCaps="true"
+        android:textColor="@color/accent"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="389dp"
+        android:layout_height="345dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="-265dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toEndOf="@+id/ivProfilePic">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="373dp"
+            android:layout_height="201dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="0dp"
+            android:background="#333333" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChannels"
+            android:layout_width="327dp"
+            android:layout_height="147dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="0dp"
+            android:background="#00333333"
+            android:scrollbars="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="246dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="270dp"
+            android:fontFamily="@font/luckiest_guy"
+            android:text="M A N A G E  C H A N N E L S"
+            android:textColor="#605C58"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+    </FrameLayout>
+
+</RelativeLayout>
