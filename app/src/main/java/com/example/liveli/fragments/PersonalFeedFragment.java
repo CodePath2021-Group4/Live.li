@@ -2,13 +2,40 @@ package com.example.liveli.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.liveli.BuildConfig;
+import com.example.liveli.Profile;
 import com.example.liveli.R;
+import com.example.liveli.StreamAdapter;
+import com.example.liveli.models.Stream;
+import com.example.liveli.parseobjects.UserProfile;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +43,16 @@ import com.example.liveli.R;
  * create an instance of this fragment.
  */
 public class PersonalFeedFragment extends Fragment {
+    public static final String TAG = "PersonalFeedFragment";
+
+    private static final String SEARCH_URL = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=%s&eventType=live&maxResults=25&type=video&key=" + BuildConfig.YOUTUBE_KEY;
+    public static final String VIDEO_URL = "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&part=liveStreamingDetails&%skey=" + BuildConfig.YOUTUBE_KEY;
+    public static final String CHANNEL_URL = "https://youtube.googleapis.com/youtube/v3/channels?part=snippet&%smaxResults=25&key=" + BuildConfig.YOUTUBE_KEY;
+
+    List<Stream> streams;
+    List<String> views;
+    List<String> channels;
+    HashMap<String, String> hmap;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +99,215 @@ public class PersonalFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_personal_feed, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //--//
+        streams = new ArrayList<>();
+        views = new ArrayList<>();
+        channels = new ArrayList<>();
+        hmap = new HashMap<String, String>();
+
+        StreamAdapter streamAdapter = new StreamAdapter(getContext(), streams);
+
+        RecyclerView rvPersonalStreams = view.findViewById(R.id.rvPersonalStreams);
+        rvPersonalStreams.setAdapter(streamAdapter);
+        rvPersonalStreams.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
+        query.whereEqualTo(UserProfile.KEY_USER, currentUser);
+        query.findInBackground(new FindCallback<UserProfile>() {
+            @Override
+            public void done(List<UserProfile> objects, ParseException e) {
+                if ( e != null) {
+                    Log.e(TAG, "Error Loading Profile Image", e);
+                } else {
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    JSONArray followed = objects.get(0).getChannels();
+
+                    for (int x = 0; x < followed.length(); x++) {
+                        try {
+                            String searchFollowedUrl = String.format(SEARCH_URL, followed.getString(x));
+
+                            client.get(searchFollowedUrl, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                    JSONObject jsonObject = json.jsonObject;
+
+                                    try {
+                                        JSONArray items = jsonObject.getJSONArray("items");
+
+                                        if (items.length() != 0) {
+                                            List<Stream> streamList = Stream.fromJsonArray(items);
+
+                                            for (int i = 0; i < streamList.size(); i++) {
+                                                streams.add(streamList.get(i));
+                                                views.add(streamList.get(i).getVideoId());
+                                                channels.add(streamList.get(i).getChannelId());
+                                            }
+                                            streamAdapter.notifyDataSetChanged();
+
+                                            Log.i(TAG, String.valueOf(streamList.size()));
+                                        }
+
+                                    } catch (JSONException jsonException) {
+                                        jsonException.printStackTrace();
+                                        Log.e(TAG, "Error Looking Up Searching Channel For Live Videos.");
+                                    }
+
+
+                                    StringBuilder vidIdParams = new StringBuilder();
+                                    for (int i = 0; i < views.size(); i++) {
+                                        vidIdParams.append("id=").append(views.get(i)).append("&");
+                                    }
+
+                                    String videoFollowedUrl = String.format(VIDEO_URL, vidIdParams.toString());
+                                    client.get(videoFollowedUrl, new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                            //JSONObject jsonObject = json.jsonObject;
+                                            try {
+                                                JSONArray items = json.jsonObject.getJSONArray("items");
+
+                                                for (int i = 0; i < views.size(); i++) {
+                                                    String views = items.getJSONObject(i).getJSONObject("liveStreamingDetails").getString("concurrentViewers");
+                                                    streams.get(i).setViewCount(views);
+                                                    streamAdapter.notifyDataSetChanged();
+                                                }
+                                            } catch (JSONException jsonException) {
+                                                jsonException.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                            Log.e(TAG, "Error Getting Viewer Count");
+                                        }
+                                    });
+
+                                    //GET channel data and extract channel image
+                                    StringBuilder channelIdParams = new StringBuilder();
+                                    for (int i = 0; i < channels.size(); i++) {
+                                        channelIdParams.append("id=").append(channels.get(i)).append("&");
+                                    }
+
+                                    String channelFollowedUrl = String.format(CHANNEL_URL, channelIdParams);
+                                    client.get(channelFollowedUrl, new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                            try {
+                                                JSONArray items = json.jsonObject.getJSONArray("items");
+                                                for (int i = 0; i < items.length(); i++) {
+                                                    String channelId = items.getJSONObject(i).getString("id");
+                                                    String url = items.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+                                                    hmap.put(channelId, url);
+                                                }
+                                            } catch (JSONException jsonException) {
+                                                jsonException.printStackTrace();
+                                            }
+
+                                            for (int i = 0; i < channels.size(); i++) {
+                                                streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
+                                                streamAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                            Log.e(TAG, "Error Getting Channel Image URL");
+                                        }
+                                    });
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                                }
+                            });
+
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+
+                    /*
+
+                    for (int i = 0; i < streams.size(); i++) {
+                        views.add(streams.get(i).getVideoId());
+                        channels.add(streams.get(i).getChannelId());
+                    }
+
+                    //GET video data and extract view count
+                    StringBuilder vidIdParams = new StringBuilder();
+                    for (int i = 0; i < views.size(); i++) {
+                        vidIdParams.append("id=").append(views.get(i)).append("&");
+                    }
+
+                    String videoFollowedUrl = String.format(VIDEO_URL, vidIdParams.toString().toString());
+                    client.get(videoFollowedUrl, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            //JSONObject jsonObject = json.jsonObject;
+                            try {
+                                JSONArray items = json.jsonObject.getJSONArray("items");
+
+                                for (int i = 0; i < views.size(); i++) {
+                                    String views = items.getJSONObject(i).getJSONObject("liveStreamingDetails").getString("concurrentViewers");
+                                    streams.get(i).setViewCount(views);
+                                    streamAdapter.notifyDataSetChanged();
+                                }
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Log.e(TAG, "Error Getting Viewer Count");
+                        }
+                    });
+
+                    //GET channel data and extract channel image
+                    StringBuilder channelIdParams = new StringBuilder();
+                    for (int i = 0; i < channels.size(); i++) {
+                        channelIdParams.append("id=").append(channels.get(i)).append("&");
+                    }
+
+                    String channelFollowedUrl = String.format(CHANNEL_URL, channelIdParams);
+                    client.get(channelFollowedUrl, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            try {
+                                JSONArray items = json.jsonObject.getJSONArray("items");
+                                for (int i = 0; i < items.length(); i++) {
+                                    String channelId = items.getJSONObject(i).getString("id");
+                                    String url = items.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+                                    hmap.put(channelId, url);
+                                }
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+
+                            for (int i = 0; i < channels.size(); i++) {
+                                streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
+                                streamAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Log.e(TAG, "Error Getting Channel Image URL");
+                        }
+                    });
+
+                     */
+                }
+            }
+        });
     }
 }

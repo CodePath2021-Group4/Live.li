@@ -5,10 +5,14 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 @ParseClassName("UserProfile")
 public class UserProfile extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "profile_image";
+    public static final String KEY_CHANNELS = "channels_followed";
+
 
     public ParseUser getUser(){ return getParseUser(KEY_USER); }
     public void setUser(ParseUser user){ put(KEY_USER, user); }
@@ -19,4 +23,25 @@ public class UserProfile extends ParseObject {
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
     }
+
+
+public JSONArray getChannels() {return getJSONArray("channels_followed");}
+public void setChannels(JSONArray jsonArray) {put(KEY_CHANNELS, jsonArray);}
+
 }
+
+//WAS ON LINE 14
+
+//<<<<<<< HEAD
+//public static final String KEY_CHANNELS = "channels_followed";
+// OR ---------------
+//    public static final String KEY_FOLLOWED = "channels_followed";
+
+
+//WAS ON LINE 28
+
+//
+//<<<<<<< HEAD
+//public JSONArray getChannels() {return getJSONArray("channels_followed");}
+//public void setChannels(JSONArray jsonArray) {put(KEY_CHANNELS, jsonArray);}
+//        =======
