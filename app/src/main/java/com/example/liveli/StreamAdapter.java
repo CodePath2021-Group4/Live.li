@@ -50,6 +50,18 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.ViewHolder
     @Override
     public int getItemCount() { return streams.size(); }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        streams.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Stream> list) {
+        streams.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -76,7 +76,7 @@
         android:layout_width="389dp"
         android:layout_height="345dp"
         android:layout_below="@+id/tvUsername"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="0dp">
 
         <TextView
             android:id="@+id/textView8"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="80dp"
             android:layout_marginBottom="0dp"
             android:background="#00333333"
             android:scrollbars="horizontal">
