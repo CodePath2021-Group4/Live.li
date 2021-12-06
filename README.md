@@ -5,7 +5,8 @@
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 1. [Schema](#Schema)
-1. [Sprint 1](#Sprint-1) 
+1. [Sprint 1](#Sprint-1)
+2. [Sprint 2](#Sprint-2) 
 
 ## Overview
 ### Description
@@ -225,8 +226,8 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 **Required Stories Completed**
 - [x] User can see detailed view when clicking on stream
-- [x] User can filter streams by category
 - [X] User can search for streams using a search bar
+- [x] User can filter streams by category
 
 - Build Progess - Detailed View with working Stream: <br />
 ![sprint2-jules-bp-4](https://user-images.githubusercontent.com/45794969/143806952-59473596-0d09-441a-9b6b-4af4ecbb67ad.gif)
@@ -234,3 +235,5 @@ Live.li is a livestream application where users can discover, search, and watch 
 &nbsp;<img src="Sprint2_Search.gif" width=300>
 - Build Progess - User can filter streams by category: <br />
   <img src="sprint2_dropdown.gif" width=300>
+- Sprint 2 Final: <br />
+  <img src="Sprint2_Final.gif" width=300>
