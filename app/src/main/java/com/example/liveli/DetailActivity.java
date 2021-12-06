@@ -51,9 +51,9 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvStreamDescription;
     DateFormat dateFormat;
     Button btnFollow;
-    boolean isFollowed = false;
     String currentChannel;
 
+    private boolean buttonClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,20 +78,23 @@ public class DetailActivity extends YouTubeBaseActivity {
 
 
 
-        checkIfFollowed(ParseUser.getCurrentUser(), currentChannel);
+        checkIfFollowed(ParseUser.getCurrentUser(), currentChannel, buttonClicked);
 
         btnFollow.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Log.i(TAG, "Is followed? : " + isFollowed);
-
-                 if(checkIfFollowed(ParseUser.getCurrentUser(), currentChannel).equals("FOLLOW")) {
+//                 Log.i(TAG, "Is followed? : " + isFollowed);
+                 buttonClicked = true;
+                 if(checkIfFollowed(ParseUser.getCurrentUser(), currentChannel, buttonClicked).equals("FOLLOW")) {
                      addChannel(ParseUser.getCurrentUser(), currentChannel);
-                     btnFollow.setText("FOLLOWED");
+                     btnFollow.setText("UNFOLLOW");
                      btnFollow.setBackgroundColor(Color.parseColor("#555555"));
                      Log.i(TAG, "Button followed!!!!!!!!!!!!!!!!!!!!!");
                  } else {
-                     Log.i(TAG, "Not followed yet : " + isFollowed);
+                     removeChannel(ParseUser.getCurrentUser(), currentChannel);
+                     btnFollow.setText("FOLLOW");
+                     btnFollow.setBackgroundColor(Color.parseColor("#ffff6c00"));
+                     Log.i(TAG, "Button followed!!!!!!!!!!!!!!!!!!!!!");
 //
                  }
 
@@ -191,8 +194,36 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
+    public void removeChannel(ParseUser currentUser, String currentChannel) {
+        ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
+        query.whereEqualTo(UserProfile.KEY_USER, currentUser);
+        query.findInBackground(new FindCallback<UserProfile>() {
+            @Override
+            public void done(List<UserProfile> objects, com.parse.ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error Loading Channels Followed", e);
+                } else {
+                    Log.i(TAG, "Great success " + objects.get(0).getJSONArray("channels_followed"));
 
-    public String checkIfFollowed(ParseUser currentUser, String currentChannel) {
+                    JSONArray channel_array = objects.get(0).getJSONArray("channels_followed");
+                    List<String> updatedChannels = new ArrayList<>();
+                    for (int i = 0; i < channel_array.length(); i++) {  // iterate through the JsonArray
+                        try {
+                            String channel = channel_array.getString(i);
+                            if(!channel.equals(currentChannel))
+                                updatedChannels.add(channel);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                    objects.get(0).put("channels_followed", updatedChannels);
+                    objects.get(0).saveInBackground();
+                }
+            }
+        });
+    }
+
+    public String checkIfFollowed(ParseUser currentUser, String currentChannel, boolean buttonClicked) {
         ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
         query.whereEqualTo(UserProfile.KEY_USER, currentUser);
         query.findInBackground(new FindCallback<UserProfile>() {
@@ -210,9 +241,8 @@ public class DetailActivity extends YouTubeBaseActivity {
                             String channel = channel_array.getString(i);
                             Log.i(TAG, "Button's text: " + btnFollow.getText());
                             // if enter detail screen and
-                            if (currentChannel.equals(channel) && btnFollow.getText().equals("FOLLOW")) {
-
-                                btnFollow.setText("FOLLOWED");
+                            if (currentChannel.equals(channel) && btnFollow.getText().equals("FOLLOW") && !buttonClicked) {
+                                btnFollow.setText("UNFOLLOW");
                                 btnFollow.setBackgroundColor(Color.parseColor("#555555"));
                                 Log.i(TAG,"MATCH! ---------------------------------------------");
                             }
