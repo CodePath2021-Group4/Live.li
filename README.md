@@ -6,7 +6,8 @@
 1. [Wireframes](#Wireframes)
 1. [Schema](#Schema)
 1. [Sprint 1](#Sprint-1)
-2. [Sprint 2](#Sprint-2) 
+2. [Sprint 2](#Sprint-2)
+3. [Sprint 3](#Sprint-3)  
 
 ## Overview
 ### Description
@@ -251,4 +252,5 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 - Build Progess - TODO <br />
 
-- Build Progess - TODO <br />
+- Build Progess - User can manage the channels they follow on their profile page <br />
+  <img src="Sprint3_managingChannels.gif" width=300>
