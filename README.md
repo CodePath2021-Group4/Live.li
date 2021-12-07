@@ -250,7 +250,11 @@ Live.li is a livestream application where users can discover, search, and watch 
 - Build Progess - Working Personal Feed from followed streamers: <br />
 ![sprint3-jules-bp-1](https://user-images.githubusercontent.com/45794969/144931928-eca06a77-074e-49c1-8b5e-50087c39e6a1.gif)
 
-- Build Progess - TODO <br />
+- Build Progess - User can follow/unfollow a streamer <br />
+  <img src="Sprint3_followChannel.gif" width=300>
 
 - Build Progess - User can manage the channels they follow on their profile page <br />
   <img src="Sprint3_managingChannels.gif" width=300>
+  
+- Sprint 3 Final: <br />
+  <img src="Sprint3_Final.gif" width=300>
