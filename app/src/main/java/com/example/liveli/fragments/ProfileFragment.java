@@ -117,7 +117,9 @@ public class ProfileFragment extends Fragment {
                 if ( e != null) {
                     Log.e(TAG, "Error Loading Profile Image", e);
                 } else {
-                    Glide.with(getContext()).load(objects.get(0).getImage().getUrl()).circleCrop().into(ivPostImage);
+                    if (getContext() != null) {
+                        Glide.with(getContext()).load(objects.get(0).getImage().getUrl()).circleCrop().into(ivPostImage);
+                    }
                 }
             }
         });

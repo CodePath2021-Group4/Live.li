@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -18,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -47,6 +47,7 @@ public class DiscoveryFragment extends Fragment {
     public static final String CHANNEL_URL =
             "https://youtube.googleapis.com/youtube/v3/channels?part=snippet&%smaxResults=25&key=" + BuildConfig.YOUTUBE_KEY;
 
+    SwipeRefreshLayout swipeContainer;
     List<Stream> streams;
     List<String> views;
     List<String> channels;
@@ -82,8 +83,27 @@ public class DiscoveryFragment extends Fragment {
 
         rvStreams.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
         etInput = view.findViewById(R.id.etInput);
         btnSearch = view.findViewById(R.id.btnSearch);
+
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "fetching new data!");
+                streams = new ArrayList<>();
+                StreamAdapter streamAdapter = new StreamAdapter(getContext(), streams);
+                rvStreams.setAdapter(streamAdapter);
+                rvStreams.setLayoutManager(new LinearLayoutManager(getContext()));
+                retrieveData(streams, streamAdapter, SEARCH_URL, category, query);
+            }
+        });
 
         Spinner dropdown = view.findViewById(R.id.sDropdown);
         String[] items = new String[]{"Popular", "Music", "Gaming", "Sports", "News"};
@@ -148,7 +168,6 @@ public class DiscoveryFragment extends Fragment {
         views = new ArrayList<>();
         channels = new ArrayList<>();
         hmap = new HashMap<String, String>();
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(String.format(SEARCH_URL, category, query), new JsonHttpResponseHandler()  {
             @SuppressLint("NotifyDataSetChanged")
@@ -159,6 +178,7 @@ public class DiscoveryFragment extends Fragment {
                 try {
                     JSONArray items = jsonObject.getJSONArray("items");
                     Log.i(TAG, "Items: " + items.length());
+                    streamAdapter.clear();
                     streams.addAll(Stream.fromJsonArray(items));
                     streamAdapter.notifyDataSetChanged();
 
@@ -233,7 +253,7 @@ public class DiscoveryFragment extends Fragment {
                             Log.d(TAG, "onFailure3");
                         }
                     });
-
+                    swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception");
                 }

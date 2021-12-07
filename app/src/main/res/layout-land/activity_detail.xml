@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_cropped" />
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="20dp" />
+
+    <ImageView
+        android:id="@+id/ivChannelImage"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_below="@id/player"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="15dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvStreamTitle"
+        android:layout_width="602dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/player"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:fontFamily="@font/luckiest_guy"
+        android:textColor="#FF8125"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Stream Title" />
+
+    <TextView
+        android:id="@+id/tvChannelName"
+        android:layout_width="602dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvStreamTitle"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:fontFamily="@font/luckiest_guy"
+        android:textColor="#828282"
+        android:textSize="16sp"
+        tools:text="Channel Name" />
+
+    <TextView
+        android:id="@+id/tvStreamPublishedAt"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvChannelName"
+        android:layout_toEndOf="@id/ivChannelImage"
+        android:textColor="#828282"
+        android:textSize="14sp"
+        tools:text="Published At" />
+
+    <TextView
+        android:id="@+id/tvStreamDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/tvStreamPublishedAt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toEndOf="@+id/btnFollow"
+        android:textColor="#828282"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        tools:text="Description" />
+
+    <Button
+        android:id="@+id/btnFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/bg_accent_button"
+        android:text="FOLLOW"
+        android:textSize="12sp" />
+</RelativeLayout>
