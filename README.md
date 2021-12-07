@@ -30,12 +30,12 @@ Live.li is a livestream application where users can discover, search, and watch 
 - [X] User can tab between 3 screens, a discover screen, a personal feed screen, and a profile screen
 - [X] User can view a feed of streams
 - [X] User can go to their profile page and logout
-- [ ] User can search for streams using search bar
-- [ ] User can search for streams using categories
-- [ ] User can click on a stream to watch bringing up a detailed view
-- [ ] User can follow/unfollow a streamer
-- [ ] User can go to their personal feed to see their followed streamers
-- [ ] User can manage the channels they follow on their profile page
+- [x] User can search for streams using search bar
+- [x] User can search for streams using categories
+- [x] User can click on a stream to watch bringing up a detailed view
+- [x] User can follow/unfollow a streamer
+- [x] User can go to their personal feed to see their followed streamers
+- [x] User can manage the channels they follow on their profile page
 
 
 **Optional Nice-to-have Stories**
@@ -237,3 +237,18 @@ Live.li is a livestream application where users can discover, search, and watch 
   <img src="sprint2_dropdown.gif" width=300>
 - Sprint 2 Final: <br />
   <img src="Sprint2_Final.gif" width=300>
+  ---
+
+## Sprint 3
+
+**Required Stories Completed**
+- [x] User can manage the channels they follow on their profile page
+- [X] User can go to their personal feed and see their followed streamers 
+- [x] User can follow/unfollow a streamer
+
+- Build Progess - Working Personal Feed from followed streamers: <br />
+![sprint3-jules-bp-1](https://user-images.githubusercontent.com/45794969/144931928-eca06a77-074e-49c1-8b5e-50087c39e6a1.gif)
+
+- Build Progess - TODO <br />
+
+- Build Progess - TODO <br />
