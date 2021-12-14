@@ -116,10 +116,10 @@ public class ProfileFragment extends Fragment {
         ivPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (i.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(i, PICK_PHOTO_CODE);
-                }
+                //Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.setTypeAndNormalize("image/*");
+                startActivityForResult(Intent.createChooser(i, "Select New Profile Image"), PICK_PHOTO_CODE);
             }
         });
 
