@@ -44,7 +44,7 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 - [ ] Livechat Feature
 - [ ] Push notifications for when a followed channel goes live
-- [ ] Users can update their profile image
+- [X] Users can update their profile image
 - [ ] Users can customize their interface (Change from light mode to dark mode, etc.)
 - [ ] Clicking on streamers name or profile image brings the user to their youtube channel
 - [ ] YouTube Integration (Import the users subscriptions)
