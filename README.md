@@ -7,7 +7,8 @@
 1. [Schema](#Schema)
 1. [Sprint 1](#Sprint-1)
 2. [Sprint 2](#Sprint-2)
-3. [Sprint 3](#Sprint-3)  
+3. [Sprint 3](#Sprint-3)
+3. [Sprint 4](#Sprint-4)
 
 ## Overview
 ### Description
@@ -238,7 +239,8 @@ Live.li is a livestream application where users can discover, search, and watch 
   <img src="sprint2_dropdown.gif" width=300>
 - Sprint 2 Final: <br />
   <img src="Sprint2_Final.gif" width=300>
-  ---
+  
+---
 
 ## Sprint 3
 
@@ -258,3 +260,18 @@ Live.li is a livestream application where users can discover, search, and watch 
   
 - Sprint 3 Final: <br />
   <img src="Sprint3_Final.gif" width=300>
+
+---
+
+## Sprint 4
+
+**Optional/Nice-to-Have Stories Completed**
+- [x] Users can update their profile image
+- [x] Videos auto play when entering Detailed View
+- [x] Code Cleanup & Small UI tweaks.
+
+- Build Progess - Users can update their profile image <br>
+![sprint4-jules-bp-1](https://user-images.githubusercontent.com/45794969/145919092-db3a1856-b544-4992-9385-aefbdeb30f89.gif)<br>
+
+- Build Progess - Videos auto play when entering Detailed View <br>
+![sprint4-jules-bp-2](https://user-images.githubusercontent.com/45794969/145919093-d4f1ea3f-7acb-49cb-a130-15706d5d9977.gif)<br>
