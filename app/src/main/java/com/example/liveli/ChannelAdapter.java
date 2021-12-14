@@ -104,7 +104,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivChannel = itemView.findViewById(R.id.ivChannel);
-            container = itemView.findViewById(R.id.container);
+            container = itemView.findViewById(R.id.shimmer_item);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
 

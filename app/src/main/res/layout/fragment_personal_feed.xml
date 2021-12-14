@@ -41,6 +41,49 @@
         android:textSize="12sp"
         android:textStyle="bold|italic" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/textView7"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPersonalStreams"
         android:layout_width="match_parent"
@@ -48,5 +91,7 @@
 
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/textView7" />
+        android:layout_below="@id/textView7"
+        android:visibility="gone"
+        />
 </RelativeLayout>

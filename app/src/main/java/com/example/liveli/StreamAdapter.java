@@ -79,7 +79,7 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.ViewHolder
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             tvViews = itemView.findViewById(R.id.tvViews);
             tvPostTime = itemView.findViewById(R.id.tvPostTime);
-            container = itemView.findViewById(R.id.container);
+            container = itemView.findViewById(R.id.shimmer_item);
         }
 
         public void bind(Stream stream) {

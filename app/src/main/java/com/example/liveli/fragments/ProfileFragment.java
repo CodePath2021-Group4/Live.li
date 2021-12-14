@@ -165,6 +165,7 @@ public class ProfileFragment extends Fragment {
 
                     if (channel_array == null) {
                         Toast.makeText(getActivity(),"Empty Feed, follow some channels", Toast.LENGTH_SHORT).show();
+
                         return;
                     }
 

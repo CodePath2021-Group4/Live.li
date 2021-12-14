@@ -22,6 +22,7 @@ import com.example.liveli.R;
 import com.example.liveli.StreamAdapter;
 import com.example.liveli.models.Stream;
 import com.example.liveli.parseobjects.UserProfile;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -48,6 +49,9 @@ public class PersonalFeedFragment extends Fragment {
     private static final String SEARCH_URL = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=%s&eventType=live&maxResults=25&type=video&key=" + BuildConfig.YOUTUBE_KEY;
     public static final String VIDEO_URL = "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&part=liveStreamingDetails&%skey=" + BuildConfig.YOUTUBE_KEY;
     public static final String CHANNEL_URL = "https://youtube.googleapis.com/youtube/v3/channels?part=snippet&%smaxResults=25&key=" + BuildConfig.YOUTUBE_KEY;
+
+    RecyclerView rvPersonalStreams;
+    ShimmerFrameLayout shimmerFrameLayout;
 
     List<Stream> streams;
     List<String> views;
@@ -113,9 +117,14 @@ public class PersonalFeedFragment extends Fragment {
 
         StreamAdapter streamAdapter = new StreamAdapter(getContext(), streams);
 
-        RecyclerView rvPersonalStreams = view.findViewById(R.id.rvPersonalStreams);
+        rvPersonalStreams = view.findViewById(R.id.rvPersonalStreams);
         rvPersonalStreams.setAdapter(streamAdapter);
         rvPersonalStreams.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container2);
+        shimmerFrameLayout.startShimmer();
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
@@ -149,9 +158,17 @@ public class PersonalFeedFragment extends Fragment {
                                                 views.add(streamList.get(i).getVideoId());
                                                 channels.add(streamList.get(i).getChannelId());
                                             }
-                                            streamAdapter.notifyDataSetChanged();
 
+                                            streamAdapter.notifyDataSetChanged();
+                                            Log.i(TAG, "LIST SIZE? WHAT?");
                                             Log.i(TAG, String.valueOf(streamList.size()));
+
+                                            Log.i(TAG, "CHANNEL EMPTY: " + channels.isEmpty());
+                                            if (channels.isEmpty()) {
+                                                shimmerFrameLayout.stopShimmer();
+                                                shimmerFrameLayout.setVisibility(View.GONE);
+                                            }
+
                                         }
 
                                     } catch (JSONException jsonException) {
@@ -212,6 +229,11 @@ public class PersonalFeedFragment extends Fragment {
 
                                             for (int i = 0; i < channels.size(); i++) {
                                                 streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
+
+                                                shimmerFrameLayout.stopShimmer();
+                                                shimmerFrameLayout.setVisibility(View.GONE);
+                                                rvPersonalStreams.setVisibility(View.VISIBLE);
+
                                                 streamAdapter.notifyDataSetChanged();
                                             }
                                         }
@@ -229,6 +251,8 @@ public class PersonalFeedFragment extends Fragment {
 
                                 }
                             });
+
+
 
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
@@ -309,5 +333,8 @@ public class PersonalFeedFragment extends Fragment {
                 }
             }
         });
+
+
+
     }
 }
