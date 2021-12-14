@@ -122,6 +122,8 @@ public class PersonalFeedFragment extends Fragment {
         rvPersonalStreams.setLayoutManager(new LinearLayoutManager(getContext()));
 
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container2);
+        shimmerFrameLayout.startShimmer();
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
 
 
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -156,12 +158,17 @@ public class PersonalFeedFragment extends Fragment {
                                                 views.add(streamList.get(i).getVideoId());
                                                 channels.add(streamList.get(i).getChannelId());
                                             }
-                                            if (streams.size() > 0) {
-                                                shimmerFrameLayout.startShimmer();
-                                            }
-                                            streamAdapter.notifyDataSetChanged();
 
+                                            streamAdapter.notifyDataSetChanged();
+                                            Log.i(TAG, "LIST SIZE? WHAT?");
                                             Log.i(TAG, String.valueOf(streamList.size()));
+
+                                            Log.i(TAG, "CHANNEL EMPTY: " + channels.isEmpty());
+                                            if (channels.isEmpty()) {
+                                                shimmerFrameLayout.stopShimmer();
+                                                shimmerFrameLayout.setVisibility(View.GONE);
+                                            }
+
                                         }
 
                                     } catch (JSONException jsonException) {
@@ -223,6 +230,10 @@ public class PersonalFeedFragment extends Fragment {
                                             for (int i = 0; i < channels.size(); i++) {
                                                 streams.get(i).setChannelImage(hmap.get(streams.get(i).getChannelId()));
 
+                                                shimmerFrameLayout.stopShimmer();
+                                                shimmerFrameLayout.setVisibility(View.GONE);
+                                                rvPersonalStreams.setVisibility(View.VISIBLE);
+
                                                 streamAdapter.notifyDataSetChanged();
                                             }
                                         }
@@ -241,9 +252,7 @@ public class PersonalFeedFragment extends Fragment {
                                 }
                             });
 
-                            shimmerFrameLayout.stopShimmer();
-                            shimmerFrameLayout.setVisibility(View.GONE);
-                            rvPersonalStreams.setVisibility(View.VISIBLE);
+
 
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
@@ -324,5 +333,8 @@ public class PersonalFeedFragment extends Fragment {
                 }
             }
         });
+
+
+
     }
 }
