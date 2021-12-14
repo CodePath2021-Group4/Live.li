@@ -1,7 +1,12 @@
 package com.example.liveli.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +33,19 @@ import com.example.liveli.models.Channel;
 import com.example.liveli.parseobjects.UserProfile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +59,14 @@ public class ProfileFragment extends Fragment {
 
     List<Channel> channels;
 
+    protected ImageView ivPostImage;
+    protected byte[] photoFile;
+    //protected byte[] data;
+    public final static int PICK_PHOTO_CODE = 1046;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,10 +93,9 @@ public class ProfileFragment extends Fragment {
         rvChannels.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ImageView ivPostImage = view.findViewById(R.id.ivProfilePic);
+        ivPostImage = view.findViewById(R.id.ivProfilePic);
 
         loadProfileImage(ivPostImage, currentUser);
-
         loadChannelsFollowed(channels, channelAdapter, currentUser);
 
         TextView tvProfileName = view.findViewById(R.id.tvUsername);
@@ -95,6 +109,16 @@ public class ProfileFragment extends Fragment {
                     ParseUser.logOut();
 
                     logout();
+                }
+            }
+        });
+
+        ivPostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (i.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivityForResult(i, PICK_PHOTO_CODE);
                 }
             }
         });
@@ -177,5 +201,53 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((data != null) && requestCode == PICK_PHOTO_CODE ){
+            Uri photoUri = data.getData();
+
+            Bitmap selectedImage = loadFromUri(photoUri);
+            ivPostImage.setImageBitmap(selectedImage);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            photoFile = stream.toByteArray();
+            //selectedImage.recycle();
+
+            updateProfileImage();
+        }
+    }
+
+    private void updateProfileImage() {
+        ParseQuery<UserProfile> query = ParseQuery.getQuery(UserProfile.class);
+        query.whereEqualTo(UserProfile.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<UserProfile>() {
+            @Override
+            public void done(List<UserProfile> objects, ParseException e) {
+                for (UserProfile userProfile: objects){
+                    ParseFile photo = new ParseFile(ParseUser.getCurrentUser().getObjectId() + ".png", photoFile);
+                    userProfile.put(UserProfile.KEY_IMAGE, photo);
+                    userProfile.saveInBackground();
+                }
+            }
+        });
+    }
+
+    private Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image =  null;
+        try {
+            if(Build.VERSION.SDK_INT > 27 ){
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return image;
     }
 }

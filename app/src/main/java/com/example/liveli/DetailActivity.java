@@ -113,7 +113,7 @@ public class DetailActivity extends YouTubeBaseActivity {
         player.initialize(BuildConfig.YOUTUBE_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.cueVideo(stream.getVideoId());
+                youTubePlayer.loadVideo(stream.getVideoId());
                 youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
                     @Override
                     public void onFullscreen(boolean b) {
