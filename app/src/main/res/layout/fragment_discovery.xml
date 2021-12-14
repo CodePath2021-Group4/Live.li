@@ -13,12 +13,59 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_cropped" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="587dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="134dp"
+        android:layout_marginEnd="0dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+            <include layout="@layout/shimmer_layout"></include>
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/etInput"
         android:layout_marginTop="0dp">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvStreams"
@@ -31,9 +78,13 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="134dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+
+            android:visibility="gone"
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Spinner
@@ -116,3 +167,6 @@
     <!--SPINNER-->
     <!--    android:layout_alignParentTop="true"-->
     <!--    android:layout_centerHorizontal="true"-->
+
+<!--    android:visibility="gone"-->
+

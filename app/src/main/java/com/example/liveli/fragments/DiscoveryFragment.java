@@ -25,6 +25,7 @@ import com.example.liveli.BuildConfig;
 import com.example.liveli.R;
 import com.example.liveli.StreamAdapter;
 import com.example.liveli.models.Stream;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,8 @@ public class DiscoveryFragment extends Fragment {
             "https://youtube.googleapis.com/youtube/v3/channels?part=snippet&%smaxResults=25&key=" + BuildConfig.YOUTUBE_KEY;
 
     SwipeRefreshLayout swipeContainer;
+    RecyclerView rvStreams;
+    ShimmerFrameLayout shimmerFrameLayout;
     List<Stream> streams;
     List<String> views;
     List<String> channels;
@@ -70,7 +73,12 @@ public class DiscoveryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rvStreams = view.findViewById(R.id.rvStreams);
+
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.startShimmer();
+
+        rvStreams = view.findViewById(R.id.rvStreams);
+
 
         streams = new ArrayList<>();
         category = "&";
@@ -101,6 +109,8 @@ public class DiscoveryFragment extends Fragment {
                 StreamAdapter streamAdapter = new StreamAdapter(getContext(), streams);
                 rvStreams.setAdapter(streamAdapter);
                 rvStreams.setLayoutManager(new LinearLayoutManager(getContext()));
+                shimmerFrameLayout.startShimmer();
+                shimmerFrameLayout.setVisibility(View.VISIBLE);
                 retrieveData(streams, streamAdapter, SEARCH_URL, category, query);
             }
         });
@@ -242,6 +252,10 @@ public class DiscoveryFragment extends Fragment {
                                     streams.get(i).setChannelImage(avatar_url);
                                 }
                                 Log.i(TAG, "HMAP: " + hmap.toString());
+
+                                shimmerFrameLayout.stopShimmer();
+                                shimmerFrameLayout.setVisibility(View.GONE);
+                                rvStreams.setVisibility(View.VISIBLE);
                                 streamAdapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -254,6 +268,7 @@ public class DiscoveryFragment extends Fragment {
                         }
                     });
                     swipeContainer.setRefreshing(false);
+
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception");
                 }
