@@ -275,3 +275,6 @@ Live.li is a livestream application where users can discover, search, and watch 
 
 - Build Progess - Videos auto play when entering Detailed View <br>
 ![sprint4-jules-bp-2](https://user-images.githubusercontent.com/45794969/145919093-d4f1ea3f-7acb-49cb-a130-15706d5d9977.gif)<br>
+
+- Sprint 4 Final: <br />
+  <img src="Sprint4_Final.gif" width=300>
